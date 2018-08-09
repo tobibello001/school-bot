@@ -10,12 +10,12 @@ const bot = new builder.UniversalBot(
     new builder.ChatConnector({
         appId: process.env.MICROSOFT_APP_ID,
         appPassword: process.env.MICROSOFT_APP_PASSWORD
-    }), 
+    }),
     dialog.waterfall
 );
 
 const connection = mongoose.connection;
-connection.once('open', function () {
+connection.once('open', () => {
     const adapter = new MongoBotStorage(
         connection.db,
         {

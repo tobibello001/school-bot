@@ -11,7 +11,7 @@ mongoose.connect('mongodb://localhost:27017/UnilagNewsPosts', { useNewUrlParser:
         console.log('Connected to database');
     })
     .catch((err) => {
-        console.error('Got error setting up database: ' + err.message);
+        console.error('Got error connecting to database: ' + err.message);
     })
 
 const server = restify.createServer();
