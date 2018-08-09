@@ -5,6 +5,7 @@
         "botbuilder-storage": "^1.0.2",
         "botbuilder-wit": "^2.0.10",
         "dotenv": "^6.0.0",
+        "mongoose": "^5.2.7",
         "restify": "^7.2.1"
     },
     "devDependencies": {
