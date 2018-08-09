@@ -1,17 +1,17 @@
 "use strict";
 
 const restify = require('restify');
-require('dotenv').config();
 const mongoose = require('mongoose');
+require('dotenv').config();
 
 const bot = require('./bot.js');
 
-mongoose.connect('mongodb://localhost:27017', { useNewUrlParser: true })
+mongoose.connect('mongodb://localhost:27017/UnilagNewsPosts', { useNewUrlParser: true })
     .then(() => {
-        console.log('Connected to MongoDB');
+        console.log('Connected to database');
     })
     .catch((err) => {
-        console.error('Got error: ' + err.message);
+        console.error('Got error setting up database: ' + err.message);
     })
 
 const server = restify.createServer();
