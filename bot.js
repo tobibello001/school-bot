@@ -1,13 +1,10 @@
 "use strict";
 
 const builder = require("botbuilder");
-const dialog = require("./dialogs/echo");
+const mongoose = require('mongoose');
+const { MongoBotStorage } = require('botbuilder-storage');
 
-// Bot Storage: Here we register the state storage for your bot. 
-// Default store: volatile in-memory store - Only for prototyping!
-// We provide adapters for Azure Table, CosmosDb, SQL Azure, or you can implement your own!
-// For samples and documentation, see: https://github.com/Microsoft/BotBuilder-Azure
-var inMemoryStorage = new builder.MemoryBotStorage();
+const dialog = require("./dialogs/echo");
 
 const bot = new builder.UniversalBot(
     new builder.ChatConnector({
@@ -15,7 +12,22 @@ const bot = new builder.UniversalBot(
         appPassword: process.env.MICROSOFT_APP_PASSWORD
     }), 
     dialog.waterfall
-).set('storage', inMemoryStorage);
+);
 
+const connection = mongoose.connection;
+connection.once('open', function () {
+    const adapter = new MongoBotStorage(
+        connection.db,
+        {
+            collection: "botState",
+            ttl: {
+                userData: 3600 * 24 * 365,
+                conversationData: 3600 * 24 * 7,
+                privateConversationData: 3600 * 24 * 7
+            }
+        }
+    )
+    bot.set('storage', adapter);
+});
 
 module.exports = bot;
