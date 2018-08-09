@@ -4,11 +4,11 @@
         "botbuilder": "^3.15.0",
         "botbuilder-storage": "^1.0.2",
         "botbuilder-wit": "^2.0.10",
-        "dotenv": "^2.0.0",
-        "restify": "^4.3.0"
+        "dotenv": "^6.0.0",
+        "restify": "^7.2.1"
     },
     "devDependencies": {
-        "@types/node": "^6.0.52",
-        "@types/restify": "^2.0.35"
+        "@types/node": "^10.5.7",
+        "@types/restify": "^7.2.3"
     }
 }
