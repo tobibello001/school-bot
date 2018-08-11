@@ -1,4 +1,4 @@
-const { AttachmentLayout, CardAction, Message, Prompts, ThumbnailCard } = require('botbuilder');
+const { AttachmentLayout, CardAction, CardImage, HeroCard, Message, Prompts, ThumbnailCard } = require('botbuilder');
 
 const Post = require('../models/posts');
 const { MessageTexts } = require('../helpers/consts');
@@ -21,10 +21,15 @@ module.exports = {
                     message = MessageTexts.NO_POSTS;
                 } else {
                     const cards = res.map((post) => {
-                        return new ThumbnailCard(session)
+                        let heroCard = new HeroCard(session)
                             .title(post.title)
                             .subtitle(new Date(post.updated).toDateString())
                             .buttons([CardAction.openUrl(session, post.link, 'Open')]);
+
+                        if (post.imageLink)
+                            heroCard.images([CardImage.create(session, post.imageLink)])
+                        
+                        return heroCard;
                     });
 
                     message = new Message(session)
