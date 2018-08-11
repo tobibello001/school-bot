@@ -1,18 +1,20 @@
 "use strict";
 
-const builder = require("botbuilder");
+const { Middleware, UniversalBot, ChatConnector } = require("botbuilder");
 const mongoose = require('mongoose');
 const { MongoBotStorage } = require('botbuilder-storage');
 
 const dialogs = require("./dialogs");
 
-const bot = new builder.UniversalBot(
-    new builder.ChatConnector({
+const bot = new UniversalBot(
+    new ChatConnector({
         appId: process.env.MICROSOFT_APP_ID,
         appPassword: process.env.MICROSOFT_APP_PASSWORD
     }),
     dialogs.root.waterfall
 );
+
+bot.use(Middleware.sendTyping());
 
 const connection = mongoose.connection;
 connection.once('open', () => {
@@ -29,5 +31,7 @@ connection.once('open', () => {
     )
     bot.set('storage', adapter);
 });
+
+bot.dialog('getLatestNews', dialogs.getLatestNews.waterfall);
 
 module.exports = bot;
