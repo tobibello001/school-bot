@@ -1,32 +1,37 @@
-const builder = require('botbuilder');
+const {
+    CardAction,
+    ListStyle,
+    Message,
+    Prompts,
+    ThumbnailCard,
+} = require('botbuilder');
+const mongoose = require('mongoose');
+const Post = require('../models/posts');
 
-const consts = require('../helpers/consts');
+const { PromptTexts, Menus } = require('../helpers/consts');
+
+const getLatestNews = () => {
+    Post.find()
+}
 
 module.exports = {
-    id: 'echo',
-    name: 'echo',
+    id: 'root',
+    name: 'root',
     waterfall: [
-        (session, args, next) => {
-            const card = new builder.ThumbnailCard(session)
-                .buttons(consts.Menus.help.map(el => builder.CardAction.imBack(session, el.title, el.title)));
-
-            const message = new builder.Message(session)
-                .text(consts.Prompts.HELP)
-                .addAttachment(card);
-
-            // The bot's global action handlers will intercept the tapped button event
-            session.endDialog(message);
+        (session) => {
+            Prompts.choice(session, PromptTexts.HELP, Menus, { listStyle: ListStyle.button })
         },
-        (session, args, next) => {
-            const card = new builder.ThumbnailCard(session)
-                .buttons(consts.Menus.help.map(el => builder.CardAction.imBack(session, el.title, el.title)));
-
-            const message = new builder.Message(session)
-                .text(consts.Prompts.HELP)
-                .addAttachment(card);
-
-            // The bot's global action handlers will intercept the tapped button event
-            session.endDialog(message);
+        (session, results) => {
+            const { index } = results.response;
+            switch (index) {
+                case 0:
+                    session.beginDialog('getLatestNews');
+            }
         },
+        (session, results) => {
+            console.log(results.response)
+            session.send(results.response);
+            session.endConversation();
+        }
     ]
 };
