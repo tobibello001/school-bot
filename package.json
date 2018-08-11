@@ -18,12 +18,15 @@
         "botbuilder": "^3.15.0",
         "botbuilder-storage": "^1.0.2",
         "botbuilder-wit": "^2.0.10",
+        "cheerio": "^1.0.0-rc.2",
         "dotenv": "^6.0.0",
+        "lodash": "^4.17.10",
         "mongoose": "^5.2.7",
-        "restify": "^7.2.1"
+        "restify": "^7.2.1",
+        "request": "^2.87.0",
+        "sanitize-html": "^1.18.4"
     },
     "devDependencies": {
-        "@types/node": "^10.5.7",
-        "@types/restify": "^7.2.3"
+        "nodemon": "^1.18.3"
     }
 }
