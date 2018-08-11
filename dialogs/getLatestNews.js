@@ -4,8 +4,8 @@ const Post = require('../models/posts');
 const { MessageTexts } = require('../helpers/consts');
 
 module.exports = {
-    id: 'echo',
-    name: 'echo',
+    id: 'getLatestNews',
+    name: /latest news/i,
     waterfall: (session, results, next) => {
         Post.find()
             .limit(5)
