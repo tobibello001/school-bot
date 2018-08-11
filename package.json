@@ -1,5 +1,6 @@
 {
     "name": "school-bot",
+    "description": "To be able to get university news for a chatbot.",
     "main": "app.js",
     "scripts": {
         "start": "node ./app.js",
@@ -10,7 +11,7 @@
         "type": "git",
         "url": "https://github.com/tobibello001/school-bot.git"
     },
-    "author": "Tobi Bello",
+    "author": "Tobi Bello <tobibello001@gmail.com> (http://github.com/tobibello001)",
     "license": "MIT",
     "bugs": "https://github.com/tobibello001/school-bot/issues",
     "homepage": "https://github.com/tobibello001/school-bot",
