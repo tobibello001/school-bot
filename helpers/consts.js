@@ -1,5 +1,5 @@
 exports.PromptTexts = {
-    HELP: 'Hello! What can I help you with?',
+    HELP: 'Hello! What would you like to know?',
 };
 exports.MessageTexts = {
     NO_POSTS : 'Post Unavailable'
