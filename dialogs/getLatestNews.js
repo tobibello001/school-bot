@@ -21,7 +21,7 @@ module.exports = {
                     message = MessageTexts.NO_POSTS;
                 } else {
                     const cards = res.map((post) => {
-                        let heroCard = new HeroCard(session)
+                        let heroCard = new ThumbnailCard(session)
                             .title(post.title)
                             .subtitle(new Date(post.updated).toDateString())
                             .buttons([CardAction.openUrl(session, post.link, 'Open')]);
@@ -38,7 +38,5 @@ module.exports = {
                 }
                 session.endDialogWithResult({ response: message });
             });
-
-
     },
 };
