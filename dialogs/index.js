@@ -1,2 +1,2 @@
-exports.getLatestNews = require('./getlatestNews');
+exports.getLatestNews = require('./getLatestNews');
 exports.root = require('./root');
