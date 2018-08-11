@@ -32,6 +32,7 @@ connection.once('open', () => {
     bot.set('storage', adapter);
 });
 
-bot.dialog(dialogs.getLatestNews.id, dialogs.getLatestNews.waterfall).triggerAction({ matches: dialogs.getLatestNews.name });;
+bot.dialog('/', dialogs.root);
+bot.dialog(dialogs.getLatestNews.id, dialogs.getLatestNews.waterfall);
 
 module.exports = bot;

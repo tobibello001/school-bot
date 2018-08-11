@@ -1,7 +1,14 @@
 const request = require('request');
 const sanitizeHtml = require('sanitize-html');
 const cheerio = require('cheerio');
+const chance = require('chance');
+const { WitRecognizer } = require('botbuilder-wit');
+
 const Post = require('../models/posts');
+const consts = require('./consts');
+
+exports.witRecognizer = new WitRecognizer(process.env.WIT_ACCESS_TOKEN);
+exports.witClient = exports.witRecognizer.witClient;
 
 exports.getUnilagNewsPostsOnPage = (pageNo) => {
     return new Promise((resolve, reject) => {
@@ -45,3 +52,22 @@ exports.getUnilagNewsPostsOnPage = (pageNo) => {
 exports.getUnilagNewsPostsOnFirstPage = () => {
     return getUnilagNewsPostsOnPage(1);
 }
+
+exports.getRandomGreeting = () => {
+    return getRandom('greeting');
+};
+
+const getRandom = (entity) => {
+    let messages;
+
+    switch (entity) {
+        case 'greeting':
+            messages = consts.MessageTexts.GREETINGS;
+            break;
+        default:
+            console.error('Unknown entity %s', entity);
+    }
+    return messages ? chance().pickone(messages) : '';
+};
+exports.getRandom = getRandom;
+
