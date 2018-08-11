@@ -10,16 +10,12 @@ const Post = require('../models/posts');
 
 const { PromptTexts, Menus } = require('../helpers/consts');
 
-const getLatestNews = () => {
-    Post.find()
-}
-
 module.exports = {
     id: 'root',
     name: 'root',
     waterfall: [
         (session) => {
-            Prompts.choice(session, PromptTexts.HELP, Menus, { listStyle: ListStyle.button })
+            Prompts.choice(session, PromptTexts.DEFAULT_RESPONSE, Menus, { listStyle: ListStyle.button })
         },
         (session, results) => {
             const { index } = results.response;
