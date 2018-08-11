@@ -6,7 +6,7 @@ require('dotenv').config();
 
 const bot = require('./bot.js');
 
-mongoose.connect('mongodb://localhost:27017/school-bot', { useNewUrlParser: true })
+mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true })
     .then(() => {
         console.log('Connected to database');
     })
