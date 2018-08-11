@@ -1,5 +1,19 @@
 {
     "name": "school-bot",
+    "main": "app.js",
+    "scripts": {
+        "start": "node ./app.js",
+        "watch": "nodemon ./app.js",
+        "sandbox": "node ./sandbox.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/tobibello001/school-bot.git"
+    },
+    "author": "Tobi Bello",
+    "license": "MIT",
+    "bugs": "https://github.com/tobibello001/school-bot/issues",
+    "homepage": "https://github.com/tobibello001/school-bot",
     "dependencies": {
         "botbuilder": "^3.15.0",
         "botbuilder-storage": "^1.0.2",
