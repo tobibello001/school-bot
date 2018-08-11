@@ -28,7 +28,7 @@ module.exports = {
 
                         if (post.imageLink)
                             heroCard.images([CardImage.create(session, post.imageLink)])
-                        
+
                         return heroCard;
                     });
 
@@ -36,7 +36,8 @@ module.exports = {
                         .attachmentLayout(AttachmentLayout.carousel)
                         .attachments(cards);
                 }
-                session.endDialogWithResult({ response: message });
+                session.send(message);
+                session.endDialog();
             });
     },
 };

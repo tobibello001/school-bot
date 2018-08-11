@@ -27,11 +27,6 @@ module.exports = {
                 case 0:
                     session.beginDialog('getLatestNews');
             }
-        },
-        (session, results) => {
-            console.log(results.response)
-            session.send(results.response);
-            session.endConversation();
         }
     ]
 };
