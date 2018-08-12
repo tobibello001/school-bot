@@ -6,7 +6,7 @@ require('dotenv').config();
 
 const bot = require('./bot.js');
 
-mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true })
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true })
     .then(() => {
         console.log('Connected to database');
     })
