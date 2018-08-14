@@ -1,6 +1,6 @@
 {
     "name": "school-bot",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "To be able to get university news for a chatbot.",
     "main": "app.js",
     "scripts": {
