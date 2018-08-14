@@ -33,6 +33,6 @@ connection.once('open', () => {
 });
 
 bot.dialog('/', dialogs.root);
-bot.dialog(dialogs.getLatestNews.id, dialogs.getLatestNews.waterfall);
+bot.dialog(dialogs.getLatestInfo.id, dialogs.getLatestInfo.waterfall);
 
 module.exports = bot;

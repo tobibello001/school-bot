@@ -14,7 +14,7 @@ const { MessageTexts, MenuTexts } = require('../helpers/consts');
 const utils = require('../helpers/utils');
 
 module.exports = new IntentDialog({ recognizers: [utils.witRecognizer] })
-    .matches('latest_news', DialogAction.beginDialog('getLatestNews'))
+    .matches('latest_info', DialogAction.beginDialog('getLatestInfo'))
     .onDefault((session, args) => {
         const messageText = session.message.text;
         const { entities } = args;

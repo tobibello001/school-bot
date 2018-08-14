@@ -4,7 +4,7 @@ const Post = require('../models/posts');
 const { MessageTexts } = require('../helpers/consts');
 
 module.exports = {
-    id: 'getLatestNews',
+    id: 'getLatestInfo',
     name: /latest news/i,
     waterfall: (session, results, next) => {
         Post.find()
