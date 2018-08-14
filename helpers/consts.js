@@ -2,7 +2,7 @@ exports.MessageTexts = {
     GREETINGS: ['Sup?', 'Hi there!', 'Hello!', 'Hey.'],
     GREETING_RESPONSE: '%s What can I help you with?',
     DEFAULT_RESPONSE: 'Oops, I didn\'t get that. What can I help you with?',
-    NO_POSTS : 'Post Unavailable'
+    NO_POSTS : 'Oops, Sorry but I got nothing for now. Check back soon.'
 }
 
 exports.MenuTexts = ['Latest News'];
