@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
 const PostSchema = new mongoose.Schema({
-    title: String,
-    link: {
+    title: {
         type: String,
         index: true
     },
+    link: String,
     updated: {
         type: Date,
         index: true
