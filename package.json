@@ -13,7 +13,7 @@
         "url": "https://github.com/tobibello001/school-bot.git"
     },
     "engines": {
-        "node": "10.8.0"
+        "node": "^10.8.0"
     },
     "author": "Tobi Bello <tobibello001@gmail.com> (http://github.com/tobibello001)",
     "license": "MIT",
