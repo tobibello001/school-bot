@@ -51,7 +51,11 @@ exports.getUnilagNewsPostsOnPage = getUnilagNewsPostsOnPage;
 
 exports.getUnilagNewsPostsOnFirstPage = () => {
     return getUnilagNewsPostsOnPage(1);
-}
+};
+
+exports.getRandomQuery = () => {
+    return getRandom('query');
+};
 
 exports.getRandomGreeting = () => {
     return getRandom('greeting');
@@ -63,6 +67,9 @@ const getRandom = (entity) => {
     switch (entity) {
         case 'greeting':
             messages = consts.MessageTexts.GREETINGS;
+            break;
+        case 'query':
+            messages = consts.MessageTexts.EXAMPLE_QUERY;
             break;
         default:
             console.error('Unknown entity %s', entity);
