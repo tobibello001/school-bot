@@ -39,15 +39,17 @@ const getUnilagNewsPostsOnPage = (pageNo) => {
                 postDetails.link = $('h2.entry-title a').attr('href')
                 postDetails.imageLink = $('img').attr('src') || null
                 // postDetails.shortDescription = $('div.fusion-post-content-container p').text()
-                postDetails.updated = new Date($('span.updated').text());
-                return postDetails;
-            });
-            posts.sort((a, b) => b.updated - a.updated);
-            resolve(posts);
-        });
-    });
-};
-exports.getUnilagNewsPostsOnPage = getUnilagNewsPostsOnPage;
+                postDetails.updated = new Date($('span.updated').text())
+                postDetails.clicks = 0
+                postDetails.source = 'unilag'
+                return postDetails
+            })
+            posts.sort((a, b) => b.updated - a.updated)
+            resolve(posts)
+        })
+    })
+}
+exports.getUnilagNewsPostsOnPage = getUnilagNewsPostsOnPage
 
 exports.getUnilagNewsPostsOnFirstPage = () => {
     return getUnilagNewsPostsOnPage(1);
