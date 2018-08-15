@@ -1,5 +1,3 @@
-"use strict";
-
 const restify = require('restify');
 const mongoose = require('mongoose');
 require('dotenv').config();
@@ -12,7 +10,7 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true })
     })
     .catch((err) => {
         console.error('Got error connecting to database: ' + err.message);
-    })
+    });
 
 const server = restify.createServer();
 server.post('/api/messages', bot.connector('*').listen());

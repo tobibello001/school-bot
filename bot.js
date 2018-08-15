@@ -1,10 +1,8 @@
-"use strict";
-
-const { Middleware, UniversalBot, ChatConnector } = require("botbuilder");
+const { Middleware, UniversalBot, ChatConnector } = require('botbuilder');
 const mongoose = require('mongoose');
 const { MongoBotStorage } = require('botbuilder-storage');
 
-const dialogs = require("./dialogs");
+const dialogs = require('./dialogs');
 
 const bot = new UniversalBot(
     new ChatConnector({
@@ -21,14 +19,14 @@ connection.once('open', () => {
     const adapter = new MongoBotStorage(
         connection.db,
         {
-            collection: "botState",
+            collection: 'botState',
             ttl: {
                 userData: 3600 * 24 * 365,
                 conversationData: 3600 * 24 * 7,
                 privateConversationData: 3600 * 24 * 7
             }
         }
-    )
+    );
     bot.set('storage', adapter);
 });
 

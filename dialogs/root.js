@@ -1,13 +1,8 @@
 const {
-    CardAction,
     DialogAction,
     EntityRecognizer,
     IntentDialog,
-    Message,
-    ThumbnailCard,
 } = require('botbuilder');
-const mongoose = require('mongoose');
-const Post = require('../models/posts');
 
 const { MessageTexts, MenuTexts } = require('../helpers/consts');
 

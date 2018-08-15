@@ -1,4 +1,4 @@
-const { AttachmentLayout, CardAction, CardImage, HeroCard, Message, Prompts, ThumbnailCard } = require('botbuilder');
+const { AttachmentLayout, CardAction, CardImage, Message, ThumbnailCard } = require('botbuilder');
 
 const Post = require('../models/posts');
 const { MessageTexts } = require('../helpers/consts');
@@ -6,10 +6,10 @@ const { MessageTexts } = require('../helpers/consts');
 module.exports = {
     id: 'getLatestInfo',
     name: /latest news/i,
-    waterfall: (session, results, next) => {
+    waterfall: (session) => {
         Post.find()
             .limit(5)
-            .sort("-updated")
+            .sort('-updated')
             .exec((err, res) => {
                 let message;
 
@@ -27,7 +27,7 @@ module.exports = {
                             .buttons([CardAction.openUrl(session, post.link, 'Open')]);
 
                         if (post.imageLink)
-                            heroCard.images([CardImage.create(session, post.imageLink)])
+                            heroCard.images([CardImage.create(session, post.imageLink)]);
 
                         return heroCard;
                     });
