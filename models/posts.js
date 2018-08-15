@@ -1,16 +1,30 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
 const PostSchema = new mongoose.Schema({
     title: {
         type: String,
-        index: true
+        index: true,
+        required: true
     },
-    link: String,
+    link: {
+        type: String,
+        required: true
+    },
     updated: {
         type: Date,
-        index: true
+        index: true,
+        required: true
     },
-    imageLink: String
-});
+    imageLink: String,
+    clicks: {
+        type: Number,
+        required: true
+    },
+    source: {
+        type: String,
+        enum: ['unilag'],
+        required: true
+    }
+})
 
-module.exports = mongoose.model('Post', PostSchema);
+module.exports = mongoose.model('Post', PostSchema)
