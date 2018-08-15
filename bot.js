@@ -32,5 +32,7 @@ connection.once('open', () => {
 
 bot.dialog('/', dialogs.root);
 bot.dialog(dialogs.getLatestInfo.id, dialogs.getLatestInfo.waterfall);
+bot.dialog(dialogs.findInfo.id, dialogs.findInfo.waterfall);
+bot.dialog(dialogs.help.id, dialogs.help.waterfall).triggerAction({ matches: dialogs.help.name});
 
 module.exports = bot;
