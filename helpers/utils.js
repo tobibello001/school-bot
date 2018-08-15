@@ -5,6 +5,7 @@ const chance = require('chance')
 const { WitRecognizer } = require('botbuilder-wit')
 
 const consts = require('./consts')
+const PostModel = require('../models/posts')
 
 exports.witRecognizer = new WitRecognizer(process.env.WIT_ACCESS_TOKEN)
 exports.witClient = exports.witRecognizer.witClient
@@ -52,8 +53,26 @@ const getUnilagNewsPostsOnPage = (pageNo) => {
 exports.getUnilagNewsPostsOnPage = getUnilagNewsPostsOnPage
 
 exports.getUnilagNewsPostsOnFirstPage = () => {
-    return getUnilagNewsPostsOnPage(1);
-};
+    return getUnilagNewsPostsOnPage(1)
+}
+
+const fetchAllUnilagNews = async () => {
+    let posts, i = 1
+    do {
+        console.log(`Getting posts from page ${i}`)
+        posts = await getUnilagNewsPostsOnPage(i++)
+        console.log(`Done getting posts from page ${i - 1}`)
+        posts.forEach(post => {
+            console.log(`Saving ${post.title}`)
+            let postDoc = new PostModel(post)
+            postDoc.save(function (err) {
+                if (err) return console.error(err)
+                console.log(`${postDoc.title} Saved`)
+            })
+        })
+    } while (posts.length != 0)
+}
+exports.fetchAllUnilagNews = fetchAllUnilagNews
 
 exports.getRandomQuery = () => {
     return getRandom('query')
@@ -77,6 +96,6 @@ const getRandom = (entity) => {
             console.error('Unknown entity %s', entity)
     }
     return messages ? chance().pickone(messages) : ''
-    }
+}
 exports.getRandom = getRandom
 
