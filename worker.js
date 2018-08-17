@@ -11,4 +11,4 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true })
         console.error('Got error connecting to database: ' + err.message)
     })
 
-setInterval(utils.unilagPostsFetch, process.env.NODE_ENV == 'prod' ? 86400000 : 900000)
+setInterval(utils.unilagPostsFetch, process.env.NODE_ENV == 'production' ? 86400000 : 900000)
