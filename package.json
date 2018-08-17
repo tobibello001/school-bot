@@ -6,6 +6,8 @@
     "scripts": {
         "start": "node ./app.js",
         "watch": "nodemon ./app.js",
+        "worker": "node ./worker.js",
+        "initdb": "node ./init-db.js",
         "sandbox": "node ./sandbox.js"
     },
     "repository": {
