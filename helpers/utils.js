@@ -125,10 +125,12 @@ exports.unilagPostsFetch = async () => {
 }
 
 exports.unilagPostsFetchInit = async () => {
-    let posts, i = 1
+    console.log('started init fetching')
+    let posts, i = 2, noOfnewPosts = 0
     do {
         posts = await getUnilagNewsPostsOnPage(i++)
         posts.forEach(post => {
+            noOfnewPosts += 1
             post.new = false
             let postDoc = new PostModel(post)
             postDoc.save(function (err) {
@@ -136,6 +138,7 @@ exports.unilagPostsFetchInit = async () => {
             })
         })
     } while (posts.length != 0)
+    console.log(`${noOfnewPosts} new posts saved after init fetch`)
 }
 
 exports.getRandomQuery = () => {
