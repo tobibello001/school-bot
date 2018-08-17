@@ -8,7 +8,8 @@ const PostSchema = new mongoose.Schema({
     },
     link: {
         type: String,
-        required: true
+        required: true,
+        index: true
     },
     updated: {
         type: Date,
@@ -18,12 +19,17 @@ const PostSchema = new mongoose.Schema({
     imageLink: String,
     clicks: {
         type: Number,
-        required: true
+        required: true,
+        default: 0,
     },
     source: {
         type: String,
         enum: ['unilag'],
         required: true
+    },
+    new: {
+        type: Boolean,
+        default: true
     }
 })
 

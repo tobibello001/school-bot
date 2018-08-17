@@ -41,7 +41,6 @@ const getUnilagNewsPostsOnPage = (pageNo) => {
                 postDetails.imageLink = $('img').attr('src') || null
                 // postDetails.shortDescription = $('div.fusion-post-content-container p').text()
                 postDetails.updated = new Date($('span.updated').text())
-                postDetails.clicks = 0
                 postDetails.source = 'unilag'
                 return postDetails
             })
