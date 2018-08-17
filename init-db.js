@@ -10,7 +10,7 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true })
         console.error('Got error connecting to database: ' + err.message)
     })
 
-utils.unilagNewsFetchInit()
+utils.unilagPostsFetchInit()
     .then(() => {
         mongoose.disconnect((error) => {
             if (error) return console.error(error)
