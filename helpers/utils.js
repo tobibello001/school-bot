@@ -3,6 +3,7 @@ const sanitizeHtml = require('sanitize-html')
 const cheerio = require('cheerio')
 const chance = require('chance')
 const { WitRecognizer } = require('botbuilder-wit')
+const { UniversalBot, Message } = require('botbuilder')
 
 const consts = require('./consts')
 const PostModel = require('../models/posts')
@@ -44,7 +45,7 @@ const getUnilagNewsPostsOnPage = (pageNo) => {
                 postDetails.source = 'unilag'
                 return postDetails
             })
-            posts.sort((a, b) => b.updated - a.updated)
+            // posts.sort((a, b) => b.updated - a.updated)
             resolve(posts)
         })
     })
@@ -55,23 +56,87 @@ exports.getUnilagNewsPostsOnFirstPage = () => {
     return getUnilagNewsPostsOnPage(1)
 }
 
-const fetchAllUnilagNews = async () => {
+exports.checkForNewUnilagPosts = (bot) => {
+    if (!(bot instanceof UniversalBot)) {
+        throw new Error('Invalid argument: bot must be an instance of UniversalBot.')
+    }
+    return () => {
+        bot.send(new Message().text('I\'m Lazy!'))
+        // const msg = new Message()
+        //     .text(consts.Messages.REMINDER, reminder.value)
+
+        // PostModel.find({ new: true }, (error, posts) => {
+        //     if (error) return console.error(error)
+        //     bot.send(msg, () => {
+        //         Reminder.remove({ _id: reminder._id }, err => {
+        //             if (err !== null) {
+        //                 console.error(err);
+        //             }
+        //         });
+        //     });
+        // }) 
+    }
+}
+
+exports.unilagPostsFetch = async () => {
+    console.log('started fetching')
+    let newPosts, oldPosts, pageNo = 1, hasUniquePost, noOfUniquePosts = 0
+    do {
+        // Getting posts from page ${pageNo}
+        newPosts = await getUnilagNewsPostsOnPage(pageNo)
+
+        // Find post duplicate
+        oldPosts = newPosts.map(newPost => {
+            return PostModel.findOne({ link: newPost.link })
+        })
+        for (let i = 0; i < oldPosts.length; i++) {
+            oldPosts[i] = await oldPosts[i]
+        }
+
+        // check if page ${pageNo} has a new post
+        // if it does, go to the next page
+        // else stop the fetch
+        hasUniquePost = oldPosts.reduce((accumulator, oldPost, index) => {
+            if (!oldPost) {
+                noOfUniquePosts += 1
+                accumulator = true
+                let postDoc = new PostModel(newPosts[index])
+                postDoc.save(function (err) {
+                    if (err) return console.error(err)
+                })
+            } else if (newPosts[index].updated - oldPost.updated > 0) {
+                noOfUniquePosts += 1
+                accumulator = true
+                for (let field in oldPost) {
+                    oldPost[field] = newPosts[index][field]
+                }
+                oldPost.save(function (err) {
+                    if (err) return console.error(err)
+                })
+            } else {
+                if (accumulator === null)
+                    accumulator = false
+            }
+            return accumulator
+        }, null)
+        pageNo += 1
+    } while (hasUniquePost)
+    console.log(`${noOfUniquePosts} new posts saved after fetch`)
+}
+
+exports.unilagPostsFetchInit = async () => {
     let posts, i = 1
     do {
-        console.log(`Getting posts from page ${i}`)
         posts = await getUnilagNewsPostsOnPage(i++)
-        console.log(`Done getting posts from page ${i - 1}`)
         posts.forEach(post => {
-            console.log(`Saving ${post.title}`)
+            post.new = false
             let postDoc = new PostModel(post)
             postDoc.save(function (err) {
                 if (err) return console.error(err)
-                console.log(`${postDoc.title} Saved`)
             })
         })
     } while (posts.length != 0)
 }
-exports.fetchAllUnilagNews = fetchAllUnilagNews
 
 exports.getRandomQuery = () => {
     return getRandom('query')
