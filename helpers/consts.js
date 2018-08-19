@@ -1,5 +1,5 @@
 exports.PromptTexts = {
-    HELP: 'What would you like to know?'
+    HELP: 'What can i help you with?'
 }
 
 exports.MessageTexts = {
