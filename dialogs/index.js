@@ -1,4 +1,5 @@
-exports.getLatestInfo = require('./getLatestInfo');
-exports.findInfo = require('./findInfo');
-exports.help = require('./help');
-exports.root = require('./root');
+exports.getLatestInfo = require('./getLatestInfo')
+exports.getTrendingInfo = require('./getTrendingInfo')
+exports.getQueryInfo = require('./getQueryInfo')
+exports.help = require('./help')
+exports.root = require('./root')
