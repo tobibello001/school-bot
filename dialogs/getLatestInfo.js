@@ -1,43 +1,23 @@
-const { AttachmentLayout, CardAction, CardImage, Message, ThumbnailCard } = require('botbuilder')
-
 const PostModel = require('../models/posts')
 const { MessageTexts } = require('../helpers/consts')
+const utils = require('../helpers/utils')
 
 module.exports = {
     id: 'getLatestInfo',
     name: /latest news/i,
-    waterfall: (session) => {
-        PostModel.find()
-            .limit(5)
-            .sort('-updated')
-            .exec((err, res) => {
-                let message
-
-                if (err) {
-                    return session.error(err)
-                }
-
-                if (res.length === 0) {
-                    message = MessageTexts.NO_POSTS
-                } else {
-                    const cards = res.map((post) => {
-                        let heroCard = new ThumbnailCard(session)
-                            .title(post.title)
-                            .subtitle(new Date(post.updated).toDateString())
-                            .buttons([CardAction.openUrl(session, post.link, 'Open')])
-
-                        if (post.imageLink)
-                            heroCard.images([CardImage.create(session, post.imageLink)])
-
-                        return heroCard
-                    })
-
-                    message = new Message(session)
-                        .attachmentLayout(AttachmentLayout.carousel)
-                        .attachments(cards)
-                }
-                session.send(message)
-                session.endDialog()
-            })
+    waterfall: async (session) => {
+        session.sendTyping()
+        let posts = await PostModel.find().skip(0).limit(5).sort('-updated')
+        let message
+        try {
+            message = utils.buildNewsCards(session, posts)
+            session.send(MessageTexts.HERE_YOU_GO)
+            session.endDialog(message)
+        } catch (e) {
+            if (e instanceof RangeError)
+                session.endDialog(MessageTexts.NO_POSTS)
+            else
+                console.error(e)
+        }
     },
 }

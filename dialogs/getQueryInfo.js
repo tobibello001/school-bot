@@ -20,7 +20,16 @@ module.exports = {
         let { query } = session.dialogData
         session.sendTyping()
         let posts = await PostModel.find({ title: new RegExp(query, 'i') }).skip(0).limit(5).sort('-updated')
-        session.send(MessageTexts.HERE_YOU_GO)
-        session.endDialog(utils.buildNewsCards(session, posts))
+        let message
+        try {
+            message = utils.buildNewsCards(session, posts)
+            session.send(MessageTexts.HERE_YOU_GO)
+            session.endDialog(message)
+        } catch (e) {
+            if (e instanceof RangeError)
+                session.endDialog(MessageTexts.NO_POSTS)
+            else
+                console.error(e)
+        }
     }]
 }

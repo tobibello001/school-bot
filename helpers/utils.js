@@ -3,9 +3,9 @@ const sanitizeHtml = require('sanitize-html')
 const cheerio = require('cheerio')
 const chance = require('chance')
 const { WitRecognizer } = require('botbuilder-wit')
-const { UniversalBot, Message } = require('botbuilder')
+const { Message, ThumbnailCard, CardAction, CardImage, AttachmentLayout } = require('botbuilder')
 
-const consts = require('./consts')
+const { MessageTexts } = require('./consts')
 const PostModel = require('../models/posts')
 
 exports.witRecognizer = new WitRecognizer(process.env.WIT_ACCESS_TOKEN)
@@ -56,26 +56,46 @@ exports.getUnilagNewsPostsOnFirstPage = () => {
     return getUnilagNewsPostsOnPage(1)
 }
 
-exports.checkForNewUnilagPosts = (bot) => {
-    if (!(bot instanceof UniversalBot)) {
-        throw new Error('Invalid argument: bot must be an instance of UniversalBot.')
-    }
-    return () => {
-        bot.send(new Message().text('I\'m Lazy!'))
-        // const msg = new Message()
-        //     .text(consts.Messages.REMINDER, reminder.value)
+// exports.checkForNewUnilagPosts = (bot) => {
+//     if (!(bot instanceof UniversalBot)) {
+//         throw new Error('Invalid argument: bot must be an instance of UniversalBot.')
+//     }
+//     return async () => {
+//         // const msg = new Message()
+//         //     .text(consts.Messages.REMINDER, reminder.value)
 
-        // PostModel.find({ new: true }, (error, posts) => {
-        //     if (error) return console.error(error)
-        //     bot.send(msg, () => {
-        //         Reminder.remove({ _id: reminder._id }, err => {
-        //             if (err !== null) {
-        //                 console.error(err);
-        //             }
-        //         });
-        //     });
-        // }) 
-    }
+//         PostModel.find({ new: true }, (error, posts) => {
+//             if (error) return console.error(error)
+//             bot.send(msg, () => {
+//                 Reminder.remove({ _id: reminder._id }, err => {
+//                     if (err !== null) {
+//                         console.error(err)
+//                     }
+//                 })
+//             })
+//         }) 
+//     }
+// }
+
+exports.buildNewsCards = (session, posts) => {
+    if (posts.length > 0)
+        throw new RangeError('posts.length must be greater than zero')
+
+    const cards = posts.map((post) => {
+        let heroCard = new ThumbnailCard(session)
+            .title(post.title)
+            .subtitle(new Date(post.updated).toDateString())
+            .buttons([CardAction.openUrl(session, `${process.env.DOMAIN}/link?url=${post.link}&ref=${post._id}`, 'Open')])
+
+        if (post.imageLink)
+            heroCard.images([CardImage.create(session, post.imageLink)])
+
+        return heroCard
+    })
+
+    return new Message(session)
+        .attachmentLayout(AttachmentLayout.carousel)
+        .attachments(cards)
 }
 
 exports.unilagPostsFetch = async () => {
@@ -154,10 +174,10 @@ const getRandom = (entity) => {
 
     switch (entity) {
         case 'greeting':
-            messages = consts.MessageTexts.GREETINGS
+            messages = MessageTexts.GREETINGS
             break
         case 'query':
-            messages = consts.MessageTexts.EXAMPLE_QUERY
+            messages = MessageTexts.EXAMPLE_QUERY
             break
         default:
             console.error('Unknown entity %s', entity)

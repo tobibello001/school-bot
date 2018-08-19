@@ -8,7 +8,16 @@ module.exports = {
     waterfall: async (session) => {
         session.sendTyping()
         let posts = await PostModel.find().skip(0).limit(5).sort('-clicks -lastClicked -updated')
-        session.send(MessageTexts.HERE_YOU_GO)
-        session.endDialog(utils.buildNewsCards(session, posts))
+        let message
+        try {
+            message = utils.buildNewsCards(session, posts)
+            session.send(MessageTexts.HERE_YOU_GO)
+            session.endDialog(message)
+        } catch (e) {
+            if (e instanceof RangeError)
+                session.endDialog(MessageTexts.NO_POSTS)
+            else
+                console.error(e)
+        }
     },
 }
