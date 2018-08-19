@@ -20,5 +20,6 @@ exports.Menus = {
     HELP_MENU: [
         { title: 'Latest News', dialogId: 'getLastestInfo' },
         { title: 'Trending News', dialogId: 'getTrendingInfo' },
+        { title: 'Get Notifications', dialogId: 'getNotifications' },
     ]
 }

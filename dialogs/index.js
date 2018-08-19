@@ -1,5 +1,6 @@
 exports.getLatestInfo = require('./getLatestInfo')
 exports.getTrendingInfo = require('./getTrendingInfo')
 exports.getQueryInfo = require('./getQueryInfo')
+exports.getNotifications = require('./getNotifications')
 exports.help = require('./help')
 exports.root = require('./root')
