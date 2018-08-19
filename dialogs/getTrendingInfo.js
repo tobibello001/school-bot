@@ -5,6 +5,7 @@ const utils = require('../helpers/utils')
 module.exports = {
     id: 'getTrendingInfo',
     name: /trending news/i,
+    // TODO: Add pagination
     waterfall: async (session) => {
         session.sendTyping()
         let posts = await PostModel.find().skip(0).limit(5).sort('-clicks -lastClicked -updated')

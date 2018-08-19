@@ -18,6 +18,8 @@ module.exports = {
 
     }, async (session) => {
         let { query } = session.dialogData
+        // TODO: Add pagination
+        // TODO: Use better means of search engine
         session.sendTyping()
         let posts = await PostModel.find({ title: new RegExp(query, 'i') }).skip(0).limit(5).sort('-updated')
         let message

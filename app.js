@@ -16,6 +16,8 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, autoIndex: fa
 const server = restify.createServer()
 server.use(restify.plugins.queryParser())
 server.post('/api/messages', bot.connector('*').listen())
+
+//TODO: Find a more secure means of counting clicks
 server.get('/link', async (req, res, next) => {
     let { url, ref } = req.query
     res.redirect(301, url, next)
