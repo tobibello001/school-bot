@@ -12,6 +12,7 @@ module.exports = new IntentDialog({ recognizers: [utils.witRecognizer] })
     .matches('latest_info', DialogAction.beginDialog('getLatestInfo'))
     .matches('query_info', DialogAction.beginDialog('getQueryInfo'))
     .matches('trending_info', DialogAction.beginDialog('getTrendingInfo'))
+    .matches('notification', DialogAction.beginDialog('getNotifications'))
     .onDefault((session, args) => {
         // const messageText = session.message.text;
         const { entities } = args
