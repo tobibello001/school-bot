@@ -8,9 +8,9 @@ module.exports = {
     // TODO: Add pagination
     waterfall: async (session) => {
         session.sendTyping()
-        let posts = await PostModel.find().skip(0).limit(5).sort('-clicks -lastClicked -updated')
-        let message
         try {
+            let posts = await PostModel.find().skip(0).limit(5).sort('-clicks -lastClicked -updated') 
+            let message
             message = utils.buildNewsCards(session, posts)
             session.send(MessageTexts.HERE_YOU_GO)
             session.endDialog(message)

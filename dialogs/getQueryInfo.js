@@ -21,9 +21,9 @@ module.exports = {
         // TODO: Add pagination
         // TODO: Use better means of search engine
         session.sendTyping()
-        let posts = await PostModel.find({ title: new RegExp(query, 'i') }).skip(0).limit(5).sort('-updated')
-        let message
         try {
+            let posts = await PostModel.find({ title: new RegExp(query, 'i') }).skip(0).limit(5).sort('-updated') 
+            let message
             message = utils.buildNewsCards(session, posts)
             session.send(MessageTexts.HERE_YOU_GO)
             session.endDialog(message)

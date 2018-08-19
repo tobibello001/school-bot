@@ -78,7 +78,7 @@ exports.getUnilagNewsPostsOnFirstPage = () => {
 // }
 
 exports.buildNewsCards = (session, posts) => {
-    if (posts.length > 0)
+    if (!posts.length)
         throw new RangeError('posts.length must be greater than zero')
 
     const cards = posts.map((post) => {
