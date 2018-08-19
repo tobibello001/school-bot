@@ -19,8 +19,11 @@ const PostSchema = new mongoose.Schema({
     imageLink: String,
     clicks: {
         type: Number,
-        required: true,
         default: 0,
+    },
+    lastClicked: {
+        type: Date,
+        default: new Date(0)
     },
     source: {
         type: String,
