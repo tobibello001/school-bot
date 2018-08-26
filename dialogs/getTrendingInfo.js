@@ -6,6 +6,7 @@ module.exports = {
     id: 'getTrendingInfo',
     name: /trending news/i,
     // TODO: Add pagination
+    // TODO: limit trends to a certain time in the past
     waterfall: async (session) => {
         session.sendTyping()
         try {

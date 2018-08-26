@@ -17,7 +17,8 @@ const server = restify.createServer()
 server.use(restify.plugins.queryParser())
 server.post('/api/messages', bot.connector('*').listen())
 
-//TODO: Find a more secure means of counting clicks
+// TODO: Find a more secure means of counting clicks
+// TODO: User should be able to get downloadables
 server.get('/link', async (req, res, next) => {
     let { url, ref } = req.query
     res.redirect(301, url, next)

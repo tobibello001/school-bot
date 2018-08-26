@@ -4,6 +4,11 @@ const { MessageTexts } = require('../helpers/consts')
 const utils = require('../helpers/utils')
 const PostModel = require('../models/posts')
 
+
+
+// TODO: Add pagination
+// TODO: Use better means of search engine
+// TODO: Decide whether to use latest or trending sort
 module.exports = {
     id: 'getQueryInfo',
     name: undefined,
