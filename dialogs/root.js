@@ -16,11 +16,14 @@ module.exports = new IntentDialog({ recognizers: [utils.witRecognizer] })
     .onDefault((session, args) => {
         // const messageText = session.message.text;
         const { entities } = args
-        
+
         // Extract all the useful entities.
         const greeting = EntityRecognizer.findEntity(entities, 'greetings')
+        const local_search_query = EntityRecognizer.findEntity(entities, 'local_search_query')
 
-        if (greeting)
+        if (local_search_query && !greeting) {
+            session.beginDialog('getQueryInfo', { entities })
+        } else if (greeting)
             session.endDialog(MessageTexts.GREETING_RESPONSE, utils.getRandomGreeting(), utils.getRandomQuery())
         else
             session.endDialog(MessageTexts.DEFAULT_RESPONSE, utils.getRandomQuery())

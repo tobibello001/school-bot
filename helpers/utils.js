@@ -77,7 +77,7 @@ exports.getUnilagNewsPostsOnFirstPage = () => {
 //     }
 // }
 
-exports.buildNewsCards = (session, posts) => {
+exports.buildNewsCards = (session, posts, isLastSet) => {
     if (!posts.length)
         throw new RangeError('posts.length must be greater than zero')
 
@@ -92,11 +92,41 @@ exports.buildNewsCards = (session, posts) => {
 
         return heroCard
     })
+    console.log(isLastSet)
+    if (!isLastSet) {
+        let moreCard = new ThumbnailCard(session)
+            .buttons([
+                CardAction.imBack(session, MessageTexts.SHOW_MORE, MessageTexts.SHOW_MORE)
+            ])
+        cards.push(moreCard)
+    }
 
     return new Message(session)
         .attachmentLayout(AttachmentLayout.carousel)
         .attachments(cards)
 }
+
+// exports.PostsCarousel = (dialogId, getPostsFunc) => {
+//     let pageSize = 1
+//     return async (session, args) => {
+//         let { queryString = null } = session.dialogData
+//         let { pageNumber = 1 } = args
+//         session.sendTyping()
+//         try {
+//             let posts = await getPostsFunc(pageNumber, pageSize, queryString)
+//             let message
+//             message = buildNewsCards(session, posts)
+//             session.userData.showMore = { pageNumber, dialogId }
+//             session.send(MessageTexts.HERE_YOU_GO)
+//             session.endDialog(message)
+//         } catch (e) {
+//             if (e instanceof RangeError)
+//                 session.endDialog(MessageTexts.NO_POSTS)
+//             else
+//                 console.error(e)
+//         }
+//     }
+// }
 
 exports.unilagPostsFetch = async () => {
     console.log('started fetching')

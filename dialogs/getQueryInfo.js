@@ -4,13 +4,12 @@ const { MessageTexts } = require('../helpers/consts')
 const utils = require('../helpers/utils')
 const PostModel = require('../models/posts')
 
+const options = { id: 'getQueryInfo', pageSize: 5 }
 
-
-// TODO: Add pagination
 // TODO: Use better means of search engine
 // TODO: Decide whether to use latest or trending sort
 module.exports = {
-    id: 'getQueryInfo',
+    id: options.id,
     name: undefined,
     waterfall: [(session, args, next) => {
         const { entities } = args
@@ -23,13 +22,17 @@ module.exports = {
 
     }, async (session) => {
         let { query } = session.dialogData
-        // TODO: Add pagination
-        // TODO: Use better means of search engine
+        let { showMore: { pageNumber = 1 } } = session.userData
         session.sendTyping()
         try {
-            let posts = await PostModel.find({ title: new RegExp(query, 'i') }).skip(0).limit(5).sort('-updated') 
+            let posts = await PostModel
+                .find({ title: new RegExp(query, 'i') })
+                .skip((pageNumber - 1) * options.pageSize)
+                .limit(5)
+                .sort('-updated')
             let message
             message = utils.buildNewsCards(session, posts)
+            session.userData.showMore = { pageNumber, dialogId: options.id }
             session.send(MessageTexts.HERE_YOU_GO)
             session.endDialog(message)
         } catch (e) {

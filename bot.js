@@ -35,6 +35,7 @@ bot.dialog(dialogs.getLatestInfo.id, dialogs.getLatestInfo.waterfall)
 bot.dialog(dialogs.getTrendingInfo.id, dialogs.getLatestInfo.waterfall)
 bot.dialog(dialogs.getQueryInfo.id, dialogs.getQueryInfo.waterfall)
 bot.dialog(dialogs.getNotifications.id, dialogs.getNotifications.waterfall)
+bot.dialog(dialogs.showMore.id, dialogs.showMore.waterfall).triggerAction({ matches: dialogs.showMore.name })
 bot.dialog(dialogs.help.id, dialogs.help.waterfall).triggerAction({ matches: dialogs.help.name})
 
 // setInterval(utils.checkForNewUnilagPosts, process.env.NODE_ENV == 'production' ? 86400000 : 900000, bot)
