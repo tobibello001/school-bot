@@ -2,7 +2,7 @@ const PostModel = require('../models/posts')
 const { MessageTexts } = require('../helpers/consts')
 const utils = require('../helpers/utils')
 
-const options = { id: 'getLatestInfo', pageSize: 5 }
+const options = { id: 'getLatestInfo', pageSize: 10 }
 
 module.exports = {
     id: options.id,

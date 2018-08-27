@@ -2,7 +2,7 @@ const PostModel = require('../models/posts')
 const { MessageTexts } = require('../helpers/consts')
 const utils = require('../helpers/utils')
 
-const options = { id: 'getTrendingInfo', pageSize: 5 }
+const options = { id: 'getTrendingInfo', pageSize: 10 }
 
 module.exports = {
     id: options.id,
@@ -17,7 +17,7 @@ module.exports = {
                 .find({ updated: { $gt: new Date(Date.now() - (new Date(Date.now() - millisecondsInAMonth).getDate() * millisecondsInADay + millisecondsInAMonth)) } })
                 .skip((pageNumber - 1) * options.pageSize)
                 .limit(5)
-                .sort('-clicks -lastClicked -updated') 
+                .sort('-clicks -lastClicked -updated')
             let message
             message = utils.buildNewsCards(session, posts)
             session.userData.showMore = { pageNumber, dialogId: options.id }

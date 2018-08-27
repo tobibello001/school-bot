@@ -4,7 +4,7 @@ const { MessageTexts } = require('../helpers/consts')
 const utils = require('../helpers/utils')
 const PostModel = require('../models/posts')
 
-const options = { id: 'getQueryInfo', pageSize: 5 }
+const options = { id: 'getQueryInfo', pageSize: 10 }
 
 // TODO: Use better means of search engine
 // TODO: Decide whether to use latest or trending sort
