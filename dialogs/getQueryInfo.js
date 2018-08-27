@@ -2,7 +2,7 @@ const { EntityRecognizer } = require('botbuilder')
 
 const { MessageTexts } = require('../helpers/consts')
 const utils = require('../helpers/utils')
-const PostModel = require('../models/posts')
+const PostModel = require('../models/post')
 
 const options = { id: 'getQueryInfo', pageSize: 10 }
 

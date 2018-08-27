@@ -2,7 +2,7 @@ const restify = require('restify')
 const mongoose = require('mongoose')
 require('dotenv').config()
 
-const PostModel = require('./models/posts')
+const PostModel = require('./models/post')
 const bot = require('./bot.js')
 
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, autoIndex: false })

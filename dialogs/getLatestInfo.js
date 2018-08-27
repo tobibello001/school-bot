@@ -1,4 +1,4 @@
-const PostModel = require('../models/posts')
+const PostModel = require('../models/post')
 const { MessageTexts } = require('../helpers/consts')
 const utils = require('../helpers/utils')
 

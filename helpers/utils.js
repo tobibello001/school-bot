@@ -6,7 +6,7 @@ const { WitRecognizer } = require('botbuilder-wit')
 const { Message, ThumbnailCard, CardAction, CardImage, AttachmentLayout } = require('botbuilder')
 
 const { MessageTexts } = require('./consts')
-const PostModel = require('../models/posts')
+const PostModel = require('../models/post')
 
 exports.witRecognizer = new WitRecognizer(process.env.WIT_ACCESS_TOKEN)
 exports.witClient = exports.witRecognizer.witClient
