@@ -7,7 +7,6 @@ const PostModel = require('../models/posts')
 const options = { id: 'getQueryInfo', pageSize: 10 }
 
 // TODO: Use better means of search engine
-// TODO: Decide whether to use latest or trending sort
 module.exports = {
     id: options.id,
     name: undefined,
@@ -29,7 +28,7 @@ module.exports = {
                 .find({ title: new RegExp(query, 'i') })
                 .skip((pageNumber - 1) * options.pageSize)
                 .limit(5)
-                .sort('-updated')
+                .sort('-clicks -lastClicked -updated')
             let message
             message = utils.buildNewsCards(session, posts)
             session.userData.showMore = { pageNumber, dialogId: options.id }
