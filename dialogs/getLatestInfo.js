@@ -24,7 +24,7 @@ module.exports = {
             let message
             let isLastSet = pageNumber * options.pageSize >= postsCount
             message = utils.buildNewsCards(session, posts, isLastSet)
-            session.userData.showMore = { args, pageNumber, dialogId: options.id }
+            session.conversationData.showMore = { args, pageNumber, dialogId: options.id }
             session.send(MessageTexts.HERE_YOU_GO)
             session.endDialog(message)
         } catch (e) {

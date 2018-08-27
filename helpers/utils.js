@@ -116,7 +116,7 @@ exports.buildNewsCards = (session, posts, isLastSet) => {
 //             let posts = await getPostsFunc(pageNumber, pageSize, queryString)
 //             let message
 //             message = buildNewsCards(session, posts)
-//             session.userData.showMore = { pageNumber, dialogId }
+//             session.conversationData.showMore = { pageNumber, dialogId }
 //             session.send(MessageTexts.HERE_YOU_GO)
 //             session.endDialog(message)
 //         } catch (e) {

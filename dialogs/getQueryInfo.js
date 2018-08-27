@@ -21,7 +21,7 @@ module.exports = {
 
     }, async (session) => {
         let { query } = session.dialogData
-        let { showMore: { pageNumber = 1 } } = session.userData
+        let { showMore: { pageNumber = 1 } } = session.conversationData
         session.sendTyping()
         try {
             let posts = await PostModel
@@ -31,7 +31,7 @@ module.exports = {
                 .sort('-clicks -lastClicked -updated')
             let message
             message = utils.buildNewsCards(session, posts)
-            session.userData.showMore = { pageNumber, dialogId: options.id }
+            session.conversationData.showMore = { pageNumber, dialogId: options.id }
             session.send(MessageTexts.HERE_YOU_GO)
             session.endDialog(message)
         } catch (e) {

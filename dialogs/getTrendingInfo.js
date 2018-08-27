@@ -8,7 +8,7 @@ module.exports = {
     id: options.id,
     name: /trending news/i,
     waterfall: async (session) => {
-        let { showMore: { pageNumber = 1 } } = session.userData
+        let { showMore: { pageNumber = 1 } } = session.conversationData
         session.sendTyping()
         try {
             let millisecondsInAMonth = 2592000000
@@ -20,7 +20,7 @@ module.exports = {
                 .sort('-clicks -lastClicked -updated')
             let message
             message = utils.buildNewsCards(session, posts)
-            session.userData.showMore = { pageNumber, dialogId: options.id }
+            session.conversationData.showMore = { pageNumber, dialogId: options.id }
             session.send(MessageTexts.HERE_YOU_GO)
             session.endDialog(message)
         } catch (e) {
