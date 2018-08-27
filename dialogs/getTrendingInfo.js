@@ -7,13 +7,14 @@ const options = { id: 'getTrendingInfo', pageSize: 5 }
 module.exports = {
     id: options.id,
     name: /trending news/i,
-    // TODO: limit trends to a certain time in the past
     waterfall: async (session) => {
         let { showMore: { pageNumber = 1 } } = session.userData
         session.sendTyping()
         try {
+            let millisecondsInAMonth = 2592000000
+            let millisecondsInADay = 86400000
             let posts = await PostModel
-                .find()
+                .find({ updated: { $gt: new Date(Date.now() - (new Date(Date.now() - millisecondsInAMonth).getDate() * millisecondsInADay + millisecondsInAMonth)) } })
                 .skip((pageNumber - 1) * options.pageSize)
                 .limit(5)
                 .sort('-clicks -lastClicked -updated') 
