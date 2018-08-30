@@ -33,7 +33,7 @@ module.exports = {
 
             try {
                 if (await Notification.findOne({ 'user_address.user.id': address.user.id })) {
-                    return session.endDialog('You have already subscribed to get latest news notifications')
+                    return session.endDialog(MessageTexts.ALREADY_SUBSCRIBED)
                 }
             } catch (err) {
                 console.error(err)
