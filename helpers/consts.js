@@ -13,7 +13,9 @@ exports.MessageTexts = {
     GREETING_RESPONSE: '%s\nTry something like:\n"%s",\nor type "help".',
     NO_POSTS: 'Oops, Sorry but I couldn\'t find anything.',
     NO_MORE_POSTS: 'Oops, Sorry but I couldn\'t find anything.',
-    SHOW_MORE:'Show more'
+    SHOW_MORE: 'Show more',
+    LATEST_NOTIFICATION_CREATED: 'Alright, I\'ll text you the latest articles as they are published at http://unilag.edu.ng',
+    LATEST_NOTIF_MESSAGE: 'Latest new from http://unilag.edu.ng'
 }
 
 exports.MenuTexts = ['Latest News']
@@ -22,5 +24,9 @@ exports.Menus = {
         { title: 'Latest News', dialogId: 'getLastestInfo' },
         { title: 'Trending News', dialogId: 'getTrendingInfo' },
         { title: 'Get Notifications', dialogId: 'getNotifications' },
+    ],
+    NOTIFICATION_OPTIONS: [
+        { id: 'latest', title: 'Latest News Notification' },
+        { id: 'tailored', title: 'Tailored Notification' }
     ]
 }

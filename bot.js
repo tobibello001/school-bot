@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const { MongoBotStorage } = require('botbuilder-storage')
 
 const dialogs = require('./dialogs')
+const utils = require('./helpers/utils')
 
 const bot = new UniversalBot(
     new ChatConnector({
@@ -38,6 +39,6 @@ bot.dialog(dialogs.getNotifications.id, dialogs.getNotifications.waterfall)
 bot.dialog(dialogs.showMore.id, dialogs.showMore.waterfall).triggerAction({ matches: dialogs.showMore.name })
 bot.dialog(dialogs.help.id, dialogs.help.waterfall).triggerAction({ matches: dialogs.help.name })
 
-// setInterval(utils.checkForNewUnilagPosts, process.env.NODE_ENV == 'production' ? 86400000 : 900000, bot)
+setInterval(utils.checkForNewUnilagPosts(bot), process.env.NODE_ENV == 'production' ? 24 * 60 * 60 * 1000 : 1 * 60 * 1000)
 
 module.exports = bot

@@ -3,10 +3,11 @@ const sanitizeHtml = require('sanitize-html')
 const cheerio = require('cheerio')
 const chance = require('chance')
 const { WitRecognizer } = require('botbuilder-wit')
-const { Message, ThumbnailCard, CardAction, CardImage, AttachmentLayout } = require('botbuilder')
+const { Message, ThumbnailCard, CardAction, CardImage, AttachmentLayout, UniversalBot } = require('botbuilder')
 
 const { MessageTexts } = require('./consts')
 const PostModel = require('../models/post')
+const NotificationModel = require('../models/notification')
 
 exports.witRecognizer = new WitRecognizer(process.env.WIT_ACCESS_TOKEN)
 exports.witClient = exports.witRecognizer.witClient
@@ -84,6 +85,43 @@ const buildNewsCards = (posts, session, isLastSet = true) => {
         .attachments(cards)
 }
 exports.buildNewsCards = buildNewsCards
+
+exports.checkForNewUnilagPosts = (bot) => {
+    if (!(bot instanceof UniversalBot)) {
+        throw new Error('Invalid argument: bot must be an instance of UniversalBot.')
+    }
+    return async () => {
+        try {
+            let notifs = NotificationModel.find()
+            let posts = PostModel.find({ new: true })
+
+            if ((posts = await posts).length == 0) return
+            posts.forEach(post => {
+                // post.new = false
+                post.save((err) => {
+                    if (err) return console.error(err)
+                })
+            })
+
+            if ((notifs = await notifs).length == 0) return
+            let notifsForLatest = notifs.filter(notif => notif.type == 'latest')
+            let messages = []
+            messages.push(new Message().text(MessageTexts.LATEST_NOTIF_MESSAGE))
+            messages.push(buildNewsCards(posts))
+            notifsForLatest.forEach(notif => {
+                messages = messages.map(message => {
+                    message.address(notif.user_address)
+                    return message.toMessage()
+                })
+                bot.send(messages, (err) => {
+                    if (err) return console.error(err)
+                })
+            })
+        } catch (error) {
+            return console.error(error)
+        }
+    }
+}
 
 // exports.PostsCarousel = (dialogId, getPostsFunc) => {
 //     let pageSize = 1
