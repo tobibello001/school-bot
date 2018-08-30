@@ -11,8 +11,7 @@ exports.MessageTexts = {
     HERE_YOU_GO: 'OK! Here you go.',
     GREETINGS: ['Sup?', 'Hi there!', 'Hello!', 'Hey.'],
     GREETING_RESPONSE: '%s\nTry something like:\n"%s",\nor type "help".',
-    NO_POSTS: 'Oops, Sorry but I couldn\'t find anything.',
-    NO_MORE_POSTS: 'Oops, Sorry but I couldn\'t find anything.',
+    NO_POSTS: 'Oops, Sorry but I couldn\'t find anything.\nTry something else,\nor type "help".',
     SHOW_MORE: 'Show more',
     LATEST_NOTIFICATION_CREATED: 'Alright, I\'ll text you the latest articles as they are published at http://unilag.edu.ng',
     LATEST_NOTIF_MESSAGE: 'Latest new from http://unilag.edu.ng'
