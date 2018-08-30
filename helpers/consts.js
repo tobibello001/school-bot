@@ -14,7 +14,9 @@ exports.MessageTexts = {
     NO_POSTS: 'Oops, Sorry but I couldn\'t find anything.\nTry something else,\nor type "help".',
     SHOW_MORE: 'Show more',
     LATEST_NOTIFICATION_CREATED: 'Alright, I\'ll text you the latest articles as they are published at http://unilag.edu.ng',
+    QUERY_NOTIFICATION_CREATED: 'Alright, I\'ll text you the latest articles about %s\nas they are published at http://unilag.edu.ng',
     LATEST_NOTIF_MESSAGE: 'Latest new from http://unilag.edu.ng',
+    QUERY_NOTIF_MESSAGE: 'Latest new about %s from http://unilag.edu.ng',
     ALREADY_SUBSCRIBED: 'You have already subscribed to that'
 }
 

@@ -97,13 +97,14 @@ exports.checkForNewUnilagPosts = (bot) => {
 
             if ((posts = await posts).length == 0) return
             posts.forEach(post => {
-                // post.new = false
+                post.new = false
                 post.save((err) => {
                     if (err) return console.error(err)
                 })
             })
 
             if ((notifs = await notifs).length == 0) return
+
             let notifsForLatest = notifs.filter(notif => notif.type == 'latest')
             let messages = []
             messages.push(new Message().text(MessageTexts.LATEST_NOTIF_MESSAGE))
@@ -117,6 +118,32 @@ exports.checkForNewUnilagPosts = (bot) => {
                     if (err) return console.error(err)
                 })
             })
+
+            let notifsForQuery = notifs.filter(notif => notif.type == 'tailored')
+            let notifsClassifiedByQuery = notifsForQuery.reduce((classified, notif) => {
+                if (notif.query in classified) {
+                    classified[notif.query].push(notif)
+                } else {
+                    (classified[notif.query] = []).push(notif)
+                }
+            }, {})
+            let queryRelatedPosts
+            let messagesForQuery
+            for (let query in notifsClassifiedByQuery) {
+                queryRelatedPosts = posts.filter(post => post.title.match(new RegExp(query, 'i')))
+                messagesForQuery = []
+                messagesForQuery.push(new Message().text(MessageTexts.QUERY_NOTIF_MESSAGE))
+                messagesForQuery.push(buildNewsCards(queryRelatedPosts))
+                notifsClassifiedByQuery[query].forEach(notif => {
+                    messagesForQuery = messagesForQuery.map(message => {
+                        message.address(notif.user_address)
+                        return message.toMessage()
+                    })
+                    bot.send(messagesForQuery, (err) => {
+                        if (err) return console.error(err)
+                    })
+                })
+            }
         } catch (error) {
             return console.error(error)
         }
