@@ -15,7 +15,10 @@ const NotificationSchema = new mongoose.Schema({
             isGroup: Boolean
         },
         user: {
-            id: String,
+            id: {
+                type: String,
+                index: true
+            },
             name: String
         },
         serviceUrl: String,
@@ -24,9 +27,13 @@ const NotificationSchema = new mongoose.Schema({
     type: {
         type: String,
         enum: ['latest', 'tailored'],
+        index: true,
         required: true
     },
-    query: String
+    query: {
+        type: String,
+        index: true
+    }
 })
 
 module.exports = mongoose.model('Notification', NotificationSchema)
