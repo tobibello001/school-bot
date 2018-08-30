@@ -13,24 +13,22 @@ module.exports = {
         try {
             let postsCount = PostModel
                 .find()
-                .count()
+                .countDocuments()
             let posts = PostModel
                 .find()
                 .skip((pageNumber - 1) * options.pageSize)
                 .limit(options.pageSize)
                 .sort('-updated')
-            postsCount = await postsCount
-            posts = await posts
             let message
-            let isLastSet = pageNumber * options.pageSize >= postsCount
-            message = utils.buildNewsCards(posts, session, isLastSet)
+            let isLastSet = pageNumber * options.pageSize >= (postsCount = await postsCount)
+            message = utils.buildNewsCards((posts = await posts), session, isLastSet)
             session.conversationData.showMore = { args, pageNumber, dialogId: options.id }
             session.send(MessageTexts.HERE_YOU_GO)
             session.endDialog(message)
         } catch (e) {
             if (e instanceof RangeError) {
                 if (showMore) {
-                    session.replaceDialog(options.id, { ...args, pageNumber: 1, showMore: false })
+                    session.replaceDialog(options.id, args)
                 } else {
                     session.endDialog(MessageTexts.NO_POSTS)
                 }
