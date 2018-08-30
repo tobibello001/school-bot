@@ -19,7 +19,7 @@ module.exports = {
                 .limit(5)
                 .sort('-clicks -lastClicked -updated')
             let message
-            message = utils.buildNewsCards(session, posts)
+            message = utils.buildNewsCards(posts, session)
             session.conversationData.showMore = { pageNumber, dialogId: options.id }
             session.send(MessageTexts.HERE_YOU_GO)
             session.endDialog(message)

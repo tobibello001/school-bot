@@ -56,43 +56,21 @@ exports.getUnilagNewsPostsOnFirstPage = () => {
     return getUnilagNewsPostsOnPage(1)
 }
 
-// exports.checkForNewUnilagPosts = (bot) => {
-//     if (!(bot instanceof UniversalBot)) {
-//         throw new Error('Invalid argument: bot must be an instance of UniversalBot.')
-//     }
-//     return async () => {
-//         // const msg = new Message()
-//         //     .text(consts.Messages.REMINDER, reminder.value)
-
-//         PostModel.find({ new: true }, (error, posts) => {
-//             if (error) return console.error(error)
-//             bot.send(msg, () => {
-//                 Reminder.remove({ _id: reminder._id }, err => {
-//                     if (err !== null) {
-//                         console.error(err)
-//                     }
-//                 })
-//             })
-//         }) 
-//     }
-// }
-
-exports.buildNewsCards = (session, posts, isLastSet) => {
+const buildNewsCards = (posts, session, isLastSet = true) => {
     if (!posts.length)
         throw new RangeError('posts.length must be greater than zero')
 
     const cards = posts.map((post) => {
-        let heroCard = new ThumbnailCard(session)
+        let thumbnailCard = new ThumbnailCard(session)
             .title(post.title)
             .subtitle(new Date(post.updated).toDateString())
             .buttons([CardAction.openUrl(session, `${process.env.DOMAIN}/link?url=${post.link}&ref=${post._id}`, 'Open')])
 
         if (post.imageLink)
-            heroCard.images([CardImage.create(session, post.imageLink)])
+            thumbnailCard.images([CardImage.create(session, post.imageLink)])
 
-        return heroCard
+        return thumbnailCard
     })
-    console.log(isLastSet)
     if (!isLastSet) {
         let moreCard = new ThumbnailCard(session)
             .buttons([
@@ -105,6 +83,7 @@ exports.buildNewsCards = (session, posts, isLastSet) => {
         .attachmentLayout(AttachmentLayout.carousel)
         .attachments(cards)
 }
+exports.buildNewsCards = buildNewsCards
 
 // exports.PostsCarousel = (dialogId, getPostsFunc) => {
 //     let pageSize = 1

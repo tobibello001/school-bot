@@ -16,7 +16,7 @@ module.exports = new IntentDialog({ recognizers: [utils.witRecognizer] })
     .onDefault((session, args) => {
         // const messageText = session.message.text;
         const { entities } = args
-
+        
         // Extract all the useful entities.
         const greeting = EntityRecognizer.findEntity(entities, 'greetings')
         const local_search_query = EntityRecognizer.findEntity(entities, 'local_search_query')
