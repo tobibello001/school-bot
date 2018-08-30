@@ -3,7 +3,7 @@ const { PromptTexts, Menus } = require('../helpers/consts')
 
 module.exports = {
     id: 'help',
-    name: /^help/i,
+    name: /^help$/i,
     waterfall: (session) => {
         const card = new ThumbnailCard(session)
             .buttons(Menus.HELP_MENU.map(menuItem => CardAction.imBack(session, menuItem.title, menuItem.title)))
