@@ -5,7 +5,7 @@ const chance = require('chance')
 const { WitRecognizer } = require('botbuilder-wit')
 const { Message, ThumbnailCard, CardAction, CardImage, AttachmentLayout, UniversalBot } = require('botbuilder')
 
-const { MessageTexts } = require('./consts')
+const { MessageTexts, Menus } = require('./consts')
 const PostModel = require('../models/post')
 const NotificationModel = require('../models/notification')
 
@@ -85,6 +85,39 @@ const buildNewsCards = (posts, session, isLastSet = true) => {
         .attachments(cards)
 }
 exports.buildNewsCards = buildNewsCards
+
+const buildNotificationCards = (notifs, session, isLastSet = true) => {
+    if (!notifs.length)
+        throw new RangeError('No Notifications Subscribed')
+
+    const cards = notifs.map(notif => {
+        let thumbnailCard = new ThumbnailCard(session)
+        switch (notif.type) {
+            case 'latest':
+                thumbnailCard.title(Menus.NOTIFICATION_OPTIONS[0].title)
+                break
+            case 'tailored':
+                thumbnailCard.title(Menus.NOTIFICATION_OPTIONS[1].title)
+                    .subtitle(notif.query)
+                break
+        }
+        thumbnailCard
+            .buttons([CardAction.dialogAction(session, 'deleteNotificationAction', notif._id, 'Delete')])
+        return thumbnailCard
+    })
+    if (!isLastSet) {
+        let moreCard = new ThumbnailCard(session)
+            .buttons([
+                CardAction.imBack(session, MessageTexts.SHOW_MORE, MessageTexts.SHOW_MORE)
+            ])
+        cards.push(moreCard)
+    }
+
+    return new Message(session)
+        .attachmentLayout(AttachmentLayout.carousel)
+        .attachments(cards)
+}
+exports.buildNotificationCards = buildNotificationCards
 
 exports.checkForNewUnilagPosts = (bot) => {
     if (!(bot instanceof UniversalBot)) {
@@ -235,14 +268,6 @@ exports.unilagPostsFetchInit = async () => {
     console.log(`${noOfnewPosts} new posts saved after init fetch`)
 }
 
-exports.getRandomQuery = () => {
-    return getRandom('query')
-}
-
-exports.getRandomGreeting = () => {
-    return getRandom('greeting')
-}
-
 const getRandom = (entity) => {
     let messages
 
@@ -259,4 +284,12 @@ const getRandom = (entity) => {
     return messages ? chance().pickone(messages) : ''
 }
 exports.getRandom = getRandom
+
+exports.getRandomQuery = () => {
+    return getRandom('query')
+}
+
+exports.getRandomGreeting = () => {
+    return getRandom('greeting')
+}
 

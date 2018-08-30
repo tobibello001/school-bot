@@ -6,7 +6,7 @@ module.exports = {
     name: /^help$/i,
     waterfall: (session) => {
         const card = new ThumbnailCard(session)
-            .buttons(Menus.HELP_MENU.map(menuItem => CardAction.imBack(session, menuItem.title, menuItem.title)))
+            .buttons(Menus.HELP_MENU.map(menuItem => CardAction.imBack(session, menuItem.msg, menuItem.title)))
 
         const message = new Message(session)
             .text(PromptTexts.HELP)
