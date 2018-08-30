@@ -5,8 +5,9 @@
     "main": "app.js",
     "scripts": {
         "start": "node ./app.js",
-        "watch": "nodemon ./app.js",
         "worker": "node ./worker.js",
+        "watch": "nodemon ./app.js",
+        "watch:worker": "nodemon ./worker.js",
         "initdb": "node ./init-db.js",
         "sandbox": "node ./sandbox.js",
         "commitmsg": "commitlint -E GIT_PARAMS",
