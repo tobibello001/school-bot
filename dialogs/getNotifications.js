@@ -6,8 +6,9 @@ const { MessageTexts, Menus } = require('../helpers/consts')
 module.exports = {
     id: 'getNotifications',
     name: /notifications/i,
-    // TODO: Implement notification feature
     // TODO: allow user to be able to specify to get notitfications on a particular topic or query
+    // TODO: Users should be able to view notifications
+    // TODO: Users should be able to manage notifications
     waterfall: [
         (session) => {
             Prompts.choice(
