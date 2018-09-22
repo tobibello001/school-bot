@@ -1,6 +1,6 @@
-const { EntityRecognizer } = require('botbuilder')
+const { EntityRecognizer, Message, CardAction, ThumbnailCard } = require('botbuilder')
 
-const { MessageTexts } = require('../helpers/consts')
+const { MessageTexts, Menus } = require('../helpers/consts')
 const utils = require('../helpers/utils')
 const PostModel = require('../models/post')
 
@@ -38,7 +38,24 @@ module.exports = {
                     if (showMore) {
                         session.replaceDialog(options.id, args)
                     } else {
-                        session.endDialog(MessageTexts.NO_POSTS)
+                        try {
+                            const card = new ThumbnailCard(session)
+                                .buttons(
+                                    Menus.HELP_MENU
+                                        .filter(menuItem => menuItem.type == 'dialog' && menuItem.onNoPost)
+                                        .map(menuItem => {
+                                            return CardAction.imBack(session, menuItem.msg, menuItem.title)
+                                        })
+                                )
+                            console.log('Foo')
+                            const message = new Message(session)
+                                .text(MessageTexts.NO_POSTS)
+                                .addAttachment(card)
+                            // The bot's global action handlers will intercept the tapped button event
+                            session.endDialog(message)
+                        } catch (e) {
+                            console.error(e)
+                        }
                     }
                 }
                 else

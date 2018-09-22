@@ -12,7 +12,7 @@ exports.MessageTexts = {
     GREETINGS: ['Sup?', 'Hi there!', 'Hello!', 'Hey.'],
     GREETING_RESPONSE: '%s\nTry something like:\n"%s",\nor type "help" to get more options.',
     WELCOME_MESSAGE: 'Welcome!\nTry something like:\n"%s",\nor type "help" to get more options.',
-    NO_POSTS: 'Oops, Sorry but I couldn\'t find anything.\nTry something else,\nor type "help" to get more options.',
+    NO_POSTS: 'Oops, Sorry but I couldn\'t find anything.\nTry something else,\nor check out these others.',
     NO_NOTIFS: 'You have no notification set',
     SHOW_MORE: 'Show more',
     LATEST_NOTIFICATION_CREATED: 'Alright, I\'ll text you the latest articles as they are published at http://unilag.edu.ng',
@@ -26,8 +26,8 @@ exports.MessageTexts = {
 
 exports.Menus = {
     HELP_MENU: [
-        { title: 'Latest News', msg: 'Latest News', dialogId: 'getLastestInfo', type: 'dialog' },
-        { title: 'Trending News', msg: 'Trending News', dialogId: 'getTrendingInfo', type: 'dialog' },
+        { title: 'Latest News', msg: 'Latest News', dialogId: 'getLastestInfo', type: 'dialog', onNoPost: true },
+        { title: 'Trending News', msg: 'Trending News', dialogId: 'getTrendingInfo', type: 'dialog', onNoPost: true },
         { title: 'Get Notifications', msg: 'Get Notifications', dialogId: 'getNotifications', type: 'dialog' },
         { title: 'My Notifications', msg: 'Show Notifications', dialogId: 'showNotifications', type: 'dialog' },
         { title: 'Privacy Policy', type: 'link', link: 'https://github.com/tobibello001/school-bot/blob/master/PRIVACY_POLICY.md' },
