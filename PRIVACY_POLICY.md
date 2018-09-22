@@ -2,7 +2,7 @@
 
 Effective date: September 22, 2018
 
-Unilag bot ("us", "we", or "our") operates the website and the Unilag bot mobile application (hereinafter referred to as the "Service").
+Unilag bot ("us", "we", or "our") operates the "Unilag bot" chatbot application (hereinafter referred to as the "Service").
 
 This page informs you of our policies regarding the collection, use, and disclosure of personal data when you use our Service and the choices you have associated with that data. Our Privacy Policy is managed by the for Unilag bot is [TermsFeed Privacy Policy Generator](https://termsfeed.com/privacy-policy/generator/).
 
