@@ -2,7 +2,7 @@
 
 Last updated: September 22, 2018
 
-Please read these Terms of Use ("Terms", "Terms of Use") carefully before using the https://school-bot-001.herokuapp.com/ website (the "Service") operated by Unilag bot ("us", "we", or "our").
+Please read these Terms of Use ("Terms", "Terms of Use") carefully before using the Unilag chatbot (the "Service") operated by Tobi Bello <https://github.co/tobibello001> ("us", "we", or "our").
 
 Your access to and use of the Service is conditioned on your acceptance of and compliance with these Terms. These Terms apply to all visitors, users and others who access or use the Service.
 
