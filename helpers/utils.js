@@ -207,48 +207,52 @@ exports.checkForNewUnilagPosts = (bot) => {
 
 exports.unilagPostsFetch = async () => {
     console.log('started fetching')
-    let newPosts, oldPosts, pageNo = 1, hasUniquePost, noOfUniquePosts = 0
-    do {
-        // Getting posts from page ${pageNo}
-        newPosts = await getUnilagNewsPostsOnPage(pageNo)
+    try {
+        let newPosts, oldPosts, pageNo = 1, hasUniquePost, noOfUniquePosts = 0
+        do {
+            // Getting posts from page ${pageNo}
+            newPosts = await getUnilagNewsPostsOnPage(pageNo)
 
-        // Find post duplicate
-        oldPosts = newPosts.map(newPost => {
-            return PostModel.findOne({ link: newPost.link })
-        })
-        for (let i = 0; i < oldPosts.length; i++) {
-            oldPosts[i] = await oldPosts[i]
-        }
-
-        // check if page ${pageNo} has a new post
-        // if it does, go to the next page
-        // else stop the fetch
-        hasUniquePost = oldPosts.reduce((accumulator, oldPost, index) => {
-            if (!oldPost) {
-                noOfUniquePosts += 1
-                accumulator = true
-                let postDoc = new PostModel(newPosts[index])
-                postDoc.save(function (err) {
-                    if (err) return console.error(err)
-                })
-            } else if (newPosts[index].updated - oldPost.updated > 0) {
-                noOfUniquePosts += 1
-                accumulator = true
-                for (let field in oldPost) {
-                    oldPost[field] = newPosts[index][field]
-                }
-                oldPost.save(function (err) {
-                    if (err) return console.error(err)
-                })
-            } else {
-                if (accumulator === null)
-                    accumulator = false
+            // Find post duplicate
+            oldPosts = newPosts.map(newPost => {
+                return PostModel.findOne({ link: newPost.link })
+            })
+            for (let i = 0; i < oldPosts.length; i++) {
+                oldPosts[i] = await oldPosts[i]
             }
-            return accumulator
-        }, null)
-        pageNo += 1
-    } while (hasUniquePost)
-    console.log(`${noOfUniquePosts} new posts saved after fetch`)
+
+            // check if page ${pageNo} has a new post
+            // if it does, go to the next page
+            // else stop the fetch
+            hasUniquePost = oldPosts.reduce((accumulator, oldPost, index) => {
+                if (!oldPost) {
+                    noOfUniquePosts += 1
+                    accumulator = true
+                    let postDoc = new PostModel(newPosts[index])
+                    postDoc.save(function (err) {
+                        if (err) return console.error(err)
+                    })
+                } else if (newPosts[index].updated - oldPost.updated > 0) {
+                    noOfUniquePosts += 1
+                    accumulator = true
+                    for (let field in newPosts[index]) {
+                        oldPost[field] = newPosts[index][field]
+                    }
+                    oldPost.save(function (err) {
+                        if (err) return console.error(err)
+                    })
+                } else {
+                    if (accumulator === null)
+                        accumulator = false
+                }
+                return accumulator
+            }, null)
+            pageNo += 1
+        } while (hasUniquePost)
+        console.log(`${noOfUniquePosts} new posts saved after fetch`)
+    } catch (e) {
+        console.error(e)
+    }
 }
 
 exports.unilagPostsFetchInit = async () => {
