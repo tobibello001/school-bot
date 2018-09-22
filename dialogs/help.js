@@ -6,7 +6,14 @@ module.exports = {
     name: /^help$/i,
     waterfall: (session) => {
         const card = new ThumbnailCard(session)
-            .buttons(Menus.HELP_MENU.map(menuItem => CardAction.imBack(session, menuItem.msg, menuItem.title)))
+            .buttons(Menus.HELP_MENU.map(menuItem => {
+                switch (menuItem.type) {
+                    case 'dialog':
+                        return CardAction.imBack(session, menuItem.msg, menuItem.title)
+                    case 'link':
+                        return CardAction.openUrl(session, menuItem.link, menuItem.title)
+                }
+            }))
 
         const message = new Message(session)
             .text(PromptTexts.HELP)

@@ -21,15 +21,17 @@ exports.MessageTexts = {
     QUERY_NOTIF_MESSAGE: 'Latest new about %s from http://unilag.edu.ng',
     ALREADY_SUBSCRIBED: 'You have already subscribed to that',
     DONE: 'The notification has been deleted!',
-    ALREADY_DELETED:'Already deleted'
+    ALREADY_DELETED: 'Already deleted'
 }
 
 exports.Menus = {
     HELP_MENU: [
-        { title: 'Latest News', msg: 'Latest News', dialogId: 'getLastestInfo' },
-        { title: 'Trending News', msg: 'Trending News', dialogId: 'getTrendingInfo' },
-        { title: 'Get Notifications', msg: 'Get Notifications', dialogId: 'getNotifications' },
-        { title: 'My Notifications', msg: 'Show Notifications', dialogId: 'showNotifications' },
+        { title: 'Latest News', msg: 'Latest News', dialogId: 'getLastestInfo', type: 'dialog' },
+        { title: 'Trending News', msg: 'Trending News', dialogId: 'getTrendingInfo', type: 'dialog' },
+        { title: 'Get Notifications', msg: 'Get Notifications', dialogId: 'getNotifications', type: 'dialog' },
+        { title: 'My Notifications', msg: 'Show Notifications', dialogId: 'showNotifications', type: 'dialog' },
+        { title: 'Privacy Policy', type: 'link', link: 'https://github.com/tobibello001/school-bot/blob/master/PRIVACY_POLICY.md' },
+        { title: 'Terms of Use', type: 'link', link: 'https://github.com/tobibello001/school-bot/blob/master/TERMS_OF_USE.md' },
     ],
     NOTIFICATION_OPTIONS: [
         { id: 'latest', title: 'Latest News Notification' },
