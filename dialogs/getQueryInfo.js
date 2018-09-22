@@ -47,7 +47,6 @@ module.exports = {
                                             return CardAction.imBack(session, menuItem.msg, menuItem.title)
                                         })
                                 )
-                            console.log('Foo')
                             const message = new Message(session)
                                 .text(MessageTexts.NO_POSTS)
                                 .addAttachment(card)
