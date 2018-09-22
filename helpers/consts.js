@@ -11,6 +11,7 @@ exports.MessageTexts = {
     HERE_YOU_GO: 'OK! Here you go.',
     GREETINGS: ['Sup?', 'Hi there!', 'Hello!', 'Hey.'],
     GREETING_RESPONSE: '%s\nTry something like:\n"%s",\nor type "help" to get more options.',
+    WELCOME_MESSAGE: 'Welcome!\nTry something like:\n"%s",\nor type "help" to get more options.',
     NO_POSTS: 'Oops, Sorry but I couldn\'t find anything.\nTry something else,\nor type "help" to get more options.',
     NO_NOTIFS: 'You have no notification set',
     SHOW_MORE: 'Show more',
