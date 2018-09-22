@@ -4,7 +4,6 @@ require('dotenv').config()
 
 const PostModel = require('./models/post')
 const bot = require('./bot.js')
-const utils = require('./helpers/utils')
 
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, autoIndex: false })
     .then(() => {
@@ -37,5 +36,3 @@ server.get('/link', async (req, res, next) => {
 server.listen(process.env.PORT, () => {
     console.log(`${server.name} listening to ${server.url}`)
 })
-
-setInterval(utils.unilagPostsFetch, process.env.NODE_ENV == 'production' ? 3 * 60 * 60 * 1000 : 5 * 60 * 1000)

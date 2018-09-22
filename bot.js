@@ -62,6 +62,7 @@ bot.on('conversationUpdate', function (message) {
     }
 })
 
+setInterval(utils.unilagPostsFetch, process.env.NODE_ENV == 'production' ? 3 * 60 * 60 * 1000 : 5 * 60 * 1000)
 setInterval(utils.checkForNewUnilagPosts(bot), process.env.NODE_ENV == 'production' ? 24 * 60 * 60 * 1000 : 5 * 60 * 1000)
 
 module.exports = bot
